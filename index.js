@@ -1,86 +1,104 @@
-var w = window.innerWidth,
-    h = window.innerHeight,
-    canvas = document.getElementById('test'),
-    ctx = canvas.getContext('2d'),
-    rate = 60,
-    arc = 100,
-    time,
-    count,
-    size = 7,
-    speed = 20,
-    parts = new Array,
-    colors = ['red','#f57900','yellow','#ce5c00','#5c3566'];
-var mouse = { x: 0, y: 0 };
+function draw(canvas, ctx, lines) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-canvas.setAttribute('width',w);
-canvas.setAttribute('height',h);
-
-function create() {
-  time = 0;
-  count = 0;
-
-  for(var i = 0; i < arc; i++) {
-    parts[i] = {
-      x: Math.ceil(Math.random() * w),
-      y: Math.ceil(Math.random() * h),
-      toX: Math.random() * 5 - 1,
-      toY: Math.random() * 2 - 1,
-      c: colors[Math.floor(Math.random()*colors.length)],
-      size: Math.random() * size
-    }
+  const color = canvas.dataset.color;
+  let count;
+  let height;
+  let width;
+  if (canvas.width <= 1024){
+    count = 50;
+  } else if (canvas.height > 700) {
+    count = 90;
   }
+  else {
+    count = 70;
+  }
+  if (canvas.width < 600 || canvas.height > 700) {
+    height = canvas.height / 5;
+  } else {
+    height = canvas.height / 3.5;
+  }
+  width = height * 0.075;
+  const speed = 0.5;
+  ctx.transform(1, 0, -0.4, 1, 0, 0);
+  ctx.fillStyle = color;
+
+  for (var i = 0; i < count; i++) {
+    const size = Math.random() + 0.5;
+    if (lines[i] === undefined || lines[i] === null) {
+      const velocity = speed * (Math.random(1.5 - 0.5) + 0.5) * (Math.random() > 0.5 ? 1 : -1);
+      lines[i] = {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        velocityY: velocity,
+        velocityX: -velocity * 0.25,
+        width: width * size,
+        height: height * size,
+        opacity: Math.random() * (0.5 - 0.1) + 0.1,
+      }
+    }
+
+    if (lines[i].y + lines[i].height >= canvas.height) {
+      lines[i].velocityY = -lines[i].velocityY;
+      lines[i].velocityX = -lines[i].velocityX;
+    }
+    if (lines[i].y <= 0) {
+      lines[i].velocityY = -lines[i].velocityY;
+      lines[i].velocityX = -lines[i].velocityX;
+    }
+
+    lines[i].x = lines[i].x + lines[i].velocityX;
+    lines[i].y = lines[i].y + lines[i].velocityY;
+
+    ctx.globalAlpha = lines[i].opacity;
+    ctx.fillRect(lines[i].x, lines[i].y, lines[i].width, lines[i].height);
+  }
+
+  ctx.globalAlpha = 1;
+  ctx.transform(1, 0, 0.4, 1, 0, 0);
+  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  if (canvas.dataset.gradient !== undefined) {
+    const gradients = canvas.dataset.gradient.split(', ');
+    ctx.globalAlpha = 0.8;
+    gradient.addColorStop(0, gradients[0]);
+    gradient.addColorStop(1, gradients[1]);
+  } else {
+    gradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
+    gradient.addColorStop(1, 'rgba(0, 0, 0, 1)');
+  }
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function particles() {
-  ctx.clearRect(0,0,w,h);
-   canvas.addEventListener('mousemove', MouseMove, false);
-  for(var i = 0; i < arc; i++) {
-    var li = parts[i];
-    var distanceFactor = DistanceBetween( mouse, parts[i] );
-    var distanceFactor = Math.max( Math.min( 15 - ( distanceFactor / 10 ), 10 ), 1 );
-    ctx.beginPath();
-    ctx.arc(li.x,li.y,li.size*distanceFactor,0,Math.PI*2,false);
-    ctx.fillStyle = li.c;
-    ctx.strokeStyle=li.c;
-    if(i%2==0)
-      ctx.stroke();
-    else
-      ctx.fill();
-    
-    li.x = li.x + li.toX * (time * 0.05);
-    li.y = li.y + li.toY * (time * 0.05);
-    
-    if(li.x > w){
-       li.x = 0; 
-    }
-    if(li.y > h) {
-       li.y = 0; 
-    }
-    if(li.x < 0) {
-       li.x = w; 
-    }
-    if(li.y < 0) {
-       li.y = h; 
-    }
-   
-     
-  }
-  if(time < speed) {
-    time++;
-  }
-  setTimeout(particles,1000/rate);
-}
-function MouseMove(e) {
-   mouse.x = e.layerX;
-   mouse.y = e.layerY;
+(function () {
 
-   //context.fillRect(e.layerX, e.layerY, 5, 5);
-   //Draw( e.layerX, e.layerY );
-}
-function DistanceBetween(p1,p2) {
-   var dx = p2.x-p1.x;
-   var dy = p2.y-p1.y;
-   return Math.sqrt(dx*dx + dy*dy);
-}
-create();
-particles();
+  const canvases = document.querySelectorAll('.particles');
+  canvases.forEach(canvas => {
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = canvas.parentElement.clientWidth;
+    canvas.height = canvas.parentElement.clientHeight;
+    const lines = [];
+
+    var fps = 15;
+    var now;
+    var then = Date.now();
+    var interval = 1000/fps;
+    var delta;
+    // Animation loop
+    (function animloop(){
+      window.requestAnimationFrame(animloop);
+      now = Date.now();
+      delta = now - then;
+      if (delta > interval) {
+        then = now - (delta % interval);
+
+        draw(canvas, ctx, lines);
+      }
+    })();
+    window.addEventListener('resize', () => {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    });
+  });
+})();
