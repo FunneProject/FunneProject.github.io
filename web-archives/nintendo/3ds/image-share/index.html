@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=320" />
+<link type="text/css" rel="stylesheet" href="css/main.css" />
+<link type="text/css" rel="stylesheet" href="css/layout.css" />
+<link type="text/css" rel="stylesheet" href=".././font.css" />
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/layout.js"></script>
+<title>Nintendo 3DS Image Share</title>
+<script type="text/javascript">
+$(function(){
+    if(is_login()){
+        auto_scroll(180);
+    }else{
+        auto_scroll(120);
+    }
+    init_layout();
+});
+
+function alert_twitter(){
+    alert("Please note that images\nposted to Twitter using this\nfeature are subject to the\nterms of use and privacy\npolicy set forth by Twitter.");
+}
+
+function alert_facebook(){
+    alert("Please note that images\nposted to Facebook using\nthis feature are subject to\nthe terms of use and\nprivacy policy set forth by\nFacebook.");
+}
+
+function alert_tumblr(){
+    alert("Please note that images\nposted to Tumblr using this\nfeature are subject to the\nterms of use and privacy\npolicy set forth by Tumblr.");
+}
+
+</script>
+</head>
+<body onload="set_share_buttons();">
+<div class="container">
+  <div class="page-header">
+    <h1><img src="img/logo_en.png" width="220" height="46" alt="Nintendo 3DS Image Share" /></h1>
+  </div>
+  
+  <div class="body">
+  
+  <div class="contents">
+
+    
+    <div class="site-desc" style="display: none;">You can easily post software screenshots to a social-networking service with this site. </div>
+
+    <div class="area-login">
+        <div class="area-btn twitter" style="display: none;" onclick="alert_twitter()"><a href="getRequestTokenTW" class="btn-twitter btn-sns">Log in to Twitter</a></div>
+    <div class="login-account login-twitter" style="display: none;">
+    <p class="check-twitter"></p><span class="text-twitter">Twitter: </span>
+    <a href="logoutTW" class="btn-logout">Log out</a>
+    </div>
+        
+        <div class="area-btn facebook" style="display: none;" onclick="alert_facebook()"><a href="getRequestTokenFB" class="btn-facebook btn-sns">Log in to Facebook</a></div>
+    <div class="login-account login-facebook" style="display: none;">
+    <p class="check-facebook"></p><span class="text-facebook">Facebook: </span>
+    <a href="logoutFB" class="btn-logout">Log out</a>
+    </div>
+
+        <div class="area-btn tumblr" style="display: none;" onclick="alert_tumblr()"><a href="getRequestTokenTB" class="btn-tumblr btn-sns">Log in to Tumblr</a></div>
+    <div class="login-account login-tumblr" style="display: none;">
+    <p class="check-tumblr"></p><span class="text-tumblr">Tumblr: </span>
+    <a href="logoutTB" class="btn-logout">Log out</a>
+    </div>
+        
+    </div>
+    
+    <div class="area-upload" style="display: none;">
+        
+    <form enctype="multipart/form-data" action="postImage" method="post" onsubmit="return check_image_selected();">
+      <input type="hidden" name="hidden_key" value="c771f194849ca0ab4c12e44b0c6845ce">
+      <div class="upload-file-notice">Select software screenshots. </div>
+      <div><input type="file" name="image" class="upload-file" accept="image/*" />
+      </div>
+      <div class="input-area">Add comment (up to 80 characters)<input type="text" maxlength="80" name="message" class="form-text">
+      </div>
+
+      <div class="input-notice">A <a href="titlelist">tag</a> for this software may be added automatically.</div>
+
+      </div>
+      
+      <div class="area-submit" style="display: none;">
+      	<p class="sns-name">Post to </p>
+      	<button type="submit" class="btn-submit"><p class="icon-post"></p><span>Post</span></button>
+      </div>
+    </form>
+  </div>
+  
+  </div>
+  
+  <div class="page-footer">
+  <div class="share-button"></div>
+  <div class="copyright-right">
+    <img src="img/nintendo.png" />
+    <p>&copy; 2013 Nintendo</p>
+  </div>
+  <ul>
+    <li><a class="link-text-left" href="titlelist">Hashtag List</a></li>
+    <li><a class="link-text-left" href="http://www.nintendo.com/3ds/image-share/">About This Tool</a></li>
+    <li><a class="link-text-left" href="notice">Legal Notices</a></li>
+    <li><a class="link-text-left" href="contact">Contact</a></li>
+  </ul>
+  </div>
+  
+  </div>
+  
+  <div class="messages" style="display: none;">
+  	<p id="file_not_selected">No file has been selected.</p>
+  </div>
+</body>
+</html>

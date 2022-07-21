@@ -1,0 +1,613 @@
+var _____WB$wombat$assign$function_____ = function(name) {return (self._wb_wombat && self._wb_wombat.local_init && self._wb_wombat.local_init(name)) || self[name]; };
+if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; return this; } }
+{
+  let window = _____WB$wombat$assign$function_____("window");
+  let self = _____WB$wombat$assign$function_____("self");
+  let document = _____WB$wombat$assign$function_____("document");
+  let location = _____WB$wombat$assign$function_____("location");
+  let top = _____WB$wombat$assign$function_____("top");
+  let parent = _____WB$wombat$assign$function_____("parent");
+  let frames = _____WB$wombat$assign$function_____("frames");
+  let opener = _____WB$wombat$assign$function_____("opener");
+
+var NIN = NIN || {};
+
+(function( $objNS ) {
+	'use strict';
+	
+	$objNS.omniture = function ( $objOptions ) {
+		
+		var isInit = false;
+		//var s; //s_code container
+		
+		/**** CONSTANTS ****/
+	
+		var IS_LIVE 		= true, // force omniture to goto the live suite. leaving false wont stop it from sending to the live suite if the site is on the live server. 
+			PROP_LIMIT 		= 43; // amount of props available for use
+
+	
+		/**** CONFIG ****/
+	
+		var _props = {
+			channel : "", //Site Section
+			prop1   : "", //Product name
+			prop2   : "", //Content type
+			prop5   : "", //search keywords
+			prop6   : "us:en", //locale
+			prop7   : "", //Compel product ID
+			prop10  : "", //Game Title
+			prop11  : "", //Game Genre
+			prop12  : "", //Game Publisher
+			prop14  : "", //Game detail type
+			prop16  : "us:nintendo", //site name
+			prefix  : "us:ncom:",	
+			locale  : "us"
+		}
+		
+		var _events = "";
+		
+		// overwrite default props
+		if($objOptions) {
+			for (var prop in $objOptions) {
+				_props[prop] = $objOptions[prop];
+			}
+		}
+				
+		if( !IS_LIVE ) {
+			s = s_gi("ncomdev");
+		}
+		
+		// set locale based on body lang attr (can be overridden)
+		_setlocale( document.body.getAttribute("lang") );
+		
+		/**** FUNCTIONS ****/
+		
+		function _setlocale( $which ) {
+			var changeSuite;
+			
+			switch( $which ) {				
+				case "ca":
+				case "en-CA":
+				case "en_CA":
+					changeSuite =  "ncomglobal,ncomcaprod";
+					_props.prefix = "ca:ncom:";
+					_props.prop6 = "ca:en";
+					_props.prop16 = "ca:nintendo";
+					_props.locale  =  "ca";
+					break;
+				
+				case "fr":
+				case "fr-CA":
+				case "fr_CA":
+					changeSuite =  "ncomglobal,ncomfrninprod";
+					_props.prefix = "ca:ncom:";
+					_props.prop6 = "ca:fr";
+					_props.prop16 = "ca:nintendo";
+					_props.locale  =  "fr";
+					break;
+				
+				case "es":
+				case "es-MX":
+				case "es_MX":
+				case "es-LA":
+				case "es_LA":
+					changeSuite =  "ncomglobal,ncomspninprod";
+					_props.prefix = "mx:ncom:";
+					_props.prop6 = "mx:es";
+					_props.prop16 = "mx:nintendo";
+					_props.locale  =  "es";
+					break;
+				
+				case "po":
+				case "pt":
+				case "pt_BR":
+				case "pt-BR":
+					changeSuite =  "ncomglobal,ncomponinprod";
+					_props.prefix = "br:ncom:";
+					_props.prop6 = "br:po";
+					_props.prop16 = "br:nintendo";
+					_props.locale  =  "po";
+					break;
+				case "3ds_bookmarks":
+					changeSuite =  "ncomglobal,ncom3dsbookmarks";
+					_props.prefix = "us:ncom:";
+					_props.prop6 = "us:en";
+					_props.prop16 = "us:nintendo";
+					_props.locale  =  "us";
+					break;					
+				case null:
+				case "us":
+				case "en":
+				case "en-US":
+				case "en_US":
+				default:
+					changeSuite =  "ncomglobal,ncomprod";
+					_props.prefix = "us:ncom:";
+					_props.prop6 = "us:en";
+					_props.prop16 = "us:nintendo";
+					_props.locale  =  "us";
+					break;	
+			}
+		
+			s  =  ( !IS_LIVE ) ? s_gi("ncomdev") : s_gi(changeSuite);
+			isInit = false;
+			
+			return this;
+		}
+	
+	
+		/*
+			Config omniture for a specific page.
+		
+		*/
+		function _config() {
+			isInit = false;
+			_events = "";
+			var keyTxt = "";
+			switch(arguments[0]) {
+				case "country":
+					_props.channel = _props.prefix + 'country selector';
+					_props.prop2 = 'country selector';
+					break;
+				
+				case "home":
+					_props.channel = _props.prefix + 'home';
+					_props.prop2 = 'site:home';
+					break;
+				
+				case "reviews":
+					_props.channel = _props.prefix + 'reviews';
+					_props.prop2 = 'site:reviews';
+					break;
+					
+				case "amiibo":
+					_props.channel = _props.prefix + 'amiibo';
+					_props.prop1 = _props.prefix + 'amiibo hardware';
+					_props.prop2 = arguments[1]; //Section: amiibo:lineup, amiibo:whatis, etc	
+					break;
+				
+				case "amiibo-detail":
+					_props.channel = _props.prefix + 'amiibo';	
+					_props.prop1 	= _props.prefix + ''+arguments[1].toLowerCase()+':'+arguments[3].toLowerCase(); //product name: e.g: us:ncom:<console>:<game title>
+					_props.prop2 	= "amiibo:details";
+					_props.prop7 	= arguments[2]; //compel id
+					_props.prop10 	= arguments[3].toLowerCase(); //game title
+					_props.prop11 	= arguments[4].toLowerCase(); //genre
+					_props.prop14 	= "home"; //game content type
+					_props.prop22 	= arguments[6].toLowerCase().replace(/ /g,''); //platform: wii, ds, 3ds, wiiware, dsiware
+					
+					var prodCode 	= arguments[7]; //product code
+					_props.prop20 = prodCode;
+					s.eVar20  		= prodCode;
+					s.products  	= ";"+prodCode;
+					
+					if( arguments[8] === "true" ) {
+						_events = "prodView,event15";
+					} 
+					
+					break;
+				
+				
+				case "whoops":
+					_props.channel = _props.prefix + 'whoops';
+					_props.prop2 = 'site:whoops';
+					break;
+				
+				case "sitemap":
+					_props.channel = _props.prefix + 'sitemap';
+					_props.prop2 = 'site:sitemap';
+					break;
+				
+				case "esrb":
+					_props.channel = _props.prefix + 'esrb';
+					_props.prop2 = 'site:esrb';
+					break;
+				
+				case "wii":
+					_props.channel = _props.prefix + 'wii';
+					_props.prop1 = _props.prefix + 'wii hardware';
+					_props.prop2 = arguments[1]; //Section: wii:home, wii:console, wii:online, wii:channels		
+					break;
+				
+				case "wiimini":
+					_props.channel = _props.prefix + 'wiimini';
+					_props.prop1 = _props.prefix + 'wiimini hardware';
+					_props.prop2 = arguments[1]; //Section: wiimini:home, wiimini:buynow		
+					break;
+					
+				case "wiiu":
+					_props.channel = _props.prefix + 'wiiu';
+					_props.prop1 = _props.prefix + 'wiiu hardware';
+					_props.prop2 = arguments[1]; //Section: wiiu:home, wiiu:console		
+					break;
+				
+				case "ds":
+					_props.channel = _props.prefix + 'ds';
+					_props.prop1 = _props.prefix + 'ds hardware';
+					_props.prop2 = arguments[1]; //Section: ds:home, ds:systems, ds:online
+					break;
+				
+				case "3ds":
+					_props.channel = _props.prefix + '3ds';
+					_props.prop1 = _props.prefix + 'ds hardware';
+					_props.prop2 = arguments[1]; //Section:  ds:systems
+					break;
+				
+				case "games":
+					_props.channel = _props.prefix + 'games';			
+					_props.prop2 = arguments[1]; //Content type: set to games:home, games:touch generations, games:wifi, games:nintendo points card				
+					break;
+					
+				case "games:howtodownload":
+					_props.channel = _props.prefix + 'games';			
+					_props.prop2 = "games:howtodownload";
+					_props.prop20 = arguments[1];
+					
+					s.eVar20  = arguments[1]; // product code
+					s.products  = ";"+arguments[1];					
+					
+					_events = "event62";	
+					
+					if( arguments[2] === "true" ) {
+						// _events += ",prodView,event15";
+					} 					
+					break;
+				
+				case "games-giftfinder":
+					_props.channel = _props.prefix + 'games';			
+					_props.prop2 = 'games:giftfinder';
+					_props.prop4 = 'giftfinder';
+					break;
+				
+				case "games-guide":
+					_props.channel = _props.prefix + 'games';			
+					_props.prop2 = 'games:gameguide';
+					_props.prop4 = 'gameguide'; 
+					break;
+				
+				case "games-detail":
+					_props.channel = _props.prefix + 'games';	
+					_props.prop1 	= _props.prefix + ''+arguments[1].toLowerCase()+':'+arguments[3].toLowerCase(); //product name: e.g: us:ncom:<console>:<game title>
+					_props.prop2 	= "game:details";
+					_props.prop7 	= arguments[2]; //compel id
+					_props.prop10 	= arguments[3].toLowerCase(); //game title
+					_props.prop11 	= arguments[4].toLowerCase(); //genre
+					_props.prop12 	= arguments[5].toLowerCase(); //publisher
+					_props.prop14 	= "home"; //game content type
+					_props.prop22 	= arguments[6].toLowerCase().replace(/ /g,''); //platform: wii, ds, 3ds, wiiware, dsiware
+					
+					var prodCode 	= arguments[7]; //product code
+					_props.prop20 = prodCode;
+					s.eVar20  		= prodCode;
+					s.products  	= ";"+prodCode;
+					
+					if( arguments[8] === "true" ) {
+						_events = "prodView,event15";
+					} 
+					
+					break;
+				
+				case "games-search":
+					_props.channel = _props.prefix + 'games';	
+					_props.prop2 = "games:gameguide:search";
+					_props.prop4 = "gameguide";
+					
+					if( typeof(arguments[1]) != 'undefined' ) {
+						keyTxt = arguments[1].toLowerCase(); //search keyword
+					} 
+				
+					_props.prop5 = keyTxt;
+					s.eVar5  = keyTxt;
+					_events = "event6";
+					break;
+				
+				case "release":
+					_props.channel = _props.prefix + 'games';
+					_props.prop2 = 'release calendar ';
+					break;
+				
+				case "whatsnew":
+					_props.channel = "us:ncom:what's new";	
+					_props.prop2 = 'article:home';
+					break;
+				
+				case "whatsnew-article":
+					_props.channel = "us:ncom:what's new";	
+					_props.prop2 = 'article:article';
+					_props.prop8 = arguments[1].toLowerCase(); //article name
+					break;
+				
+				case "search":
+					_props.channel = _props.prefix + 'search';			
+					keyTxt = arguments[1].toLowerCase(); //search keyword
+					_props.prop5 = keyTxt;
+					s.eVar5 = keyTxt;
+					_events = 'event6';
+					break;
+				
+				case "leaving":
+					_props.channel = _props.prefix + 'leaving nintendo';
+					_props.prop2 = 'leaving nintendo';
+					break;
+			}
+			
+			return this;
+		}
+	
+	
+		/*
+			Set omniture's prop and channel based on config object
+		*/
+		function initialize() {
+			
+			s.channel = _props.channel;
+			for ( var i = 0; i < PROP_LIMIT; i++ ) {
+				s['prop'+i.toString()] = _props['prop'+i.toString()]; 
+			}
+			
+			s.events = _events;
+		
+			isInit = true;
+		}
+	
+
+		function _trackPage( $pageName, $isHome, $checkVanityURL ) {
+			initialize();
+			
+			s.pageName = _props.prefix + $pageName;
+			
+			s.events = s.events.replace(/event20*/g, ""); // ensure that duplicates are not added
+			s.events = s.events.replace(/,,*/g, ","); // remove any instance of double comma's
+			if(s.events) { s.events += ","; }
+			s.events += "event20";
+			
+			if($isHome) {
+				s.events += ",event13";
+			}
+			
+			if($checkVanityURL){
+				s.prop24 = document.domain;
+			} else {
+				s.prop24= "";
+			}
+			
+			var s_code=s.t();if(s_code)document.write(s_code);
+			return this;
+		}
+		
+		/*
+			Track an event without capturing a page view
+			additionalProps is an multideminsional array formated as [[propName, value],[propName, value]]
+		*/
+		function _trackLink($eVar, $eVarData, $eventN, $name, $additionalProps) {
+			if(!isInit) {	initialize();	}
+			var events = "event" + $eventN.toString();
+	
+			//string used in linkTrackVars
+			var addVarEvents = 'eVar'+$eVar.toString()+',events';
+			var addVarProps = ''; 
+
+			if( $additionalProps ) {
+				addVarProps = setProps($additionalProps);
+			}
+
+			//set omniture
+			s.linkTrackVars = addVarEvents + addVarProps;
+			s.linkTrackEvents = events;
+			s['eVar'+$eVar.toString()] = $eVarData;	
+
+			s.events = events; 
+			s.tl(true, 'o', $name);
+		
+			clearTrackLink($eVar);
+		
+			if( $additionalProps ) {
+				clearUsedProps($additionalProps);
+			}
+		
+			return this;
+		}
+				/*
+					trackLink() uses this to add prop's for a trackLink event.
+					Returns string of props being tracked. e.g "prop7,prop8"
+				*/
+				function setProps( $additionalProps ) {
+					var i,
+						length = $additionalProps.length,
+						updatedLinkTrackVar = "";
+			
+					for (i = 0; i < length; i++){
+						updatedLinkTrackVar += ","+$additionalProps[i][0]; //grab propname
+						s[$additionalProps[i][0]] = $additionalProps[i][1];  //set prop to the s_code
+					}
+		
+					return updatedLinkTrackVar;
+				}
+				/*
+					clear the previously used props from the s_code
+				*/
+				function clearUsedProps( $additionalProps ) {
+					var i,
+						length = $additionalProps.length;
+			
+					for (i = 0; i < length; i++){
+						s[$additionalProps[i][0]] = $additionalProps[i][1];
+					}
+				}
+			
+				function clearTrackLink( $eVar ) {
+					s.linkTrackVars = "";
+					s.events = ""; 
+					s['eVar'+$eVar.toString()] = "";
+				}
+		
+		function _trackExitLink( $url ) {
+			s.linkTrackVars = "";
+			s.linkTrackEvents = "";
+			s.tl($url, 'e', $url);
+			return this;
+		}
+		
+		function _trackProp( $propNum, $propValue ) {
+			s.linkTrackVars = 'prop'+$propNum.toString();
+			s.linkTrackEvents = '';
+			s['prop'+$propNum.toString()] = $propValue; 
+			s.tl(this, 'o', $propValue);
+
+			//clear
+			s['prop'+$propNum.toString()] = ""; 
+			s.linkTrackVars = "";
+			s.linkTrackEvents = '';
+			
+			return this;
+		}
+		
+		/*
+			Helper methods
+			Predefined shortcuts to common track events that depend on _trackLink();
+			All are be public.
+		*/
+		var _helper = {
+			/*
+				Track curated list in the gameguide.
+				('Chibi-Robo!: Photo Finder', 'Chibi-Robo!: Photo Finder_B2', 'games_B2', 'New Releases', 'learnmore');
+			*/
+			trackCuratedList: function( $gameName, $promoID, $location, $curatedListTitle, $type ) {
+				if(!isInit) {	initialize();	}
+				
+				s.eVar12 = $gameName;
+				s.prop26 = $location;
+				s.prop27 = $curatedListTitle;
+				
+				
+				if($type === "eshop") {
+					//eshop section curated list
+					s.prop42 = $curatedListTitle + "_" + $gameName;
+					s.linkTrackVars = 'eVar12,eVar23,prop26,prop27,prop42,events'; 
+					s.linkTrackEvents = 'event17,event31';
+					s.events = 'event17,event31';
+				} else if($type === "games" &&  $promoID ) {
+					// games section curated list		
+					s.eVar16 = $promoID; 
+					s.linkTrackVars = 'eVar12,eVar16,prop26,prop27,events'; 
+					s.linkTrackEvents = 'event17,event30';
+					s.events = 'event17,event30';					 
+				} else {
+					s.linkTrackVars='eVar12,prop26,prop27,events'; 
+					s.linkTrackEvents='event17';
+					s.events='event17';
+				}
+ 
+				s.tl(true, 'o', "official site");
+				
+				return this;
+			},
+			trackClubN: function() {
+				_trackLink(11, props.prop10, 16, "Club Nintendo");
+			},
+			trackNewsletter: function() {
+				_trackLink(11, "Newsletter", 26, "Newsletter");
+			},
+			trackNOATwitter: function() {
+				_trackLink(22, "Twitter-NOA", 24, "Twitter-NOA");
+			},
+			trackNOAYoutube: function() {
+				_trackLink(22, "YouTube", 24, "YouTube");
+			},
+			trackNOAFacebook: function() {
+				_trackLink(22, "Facebook", 24, "Facebook");
+			},
+			
+			/*
+				Default track method for NCOM promo's. 
+				
+				Sample homepage: trackPromo("New Mario Game_A1", "home_A1", "home") //'A'= position on page, '1'= position in carousel
+				Sample wiiu home: trackPromo("New Mario Game_A1", "wiiu_A1", "wiiu") 
+				Sample games section: trackPromo("New Mario Game_A1", "games_A1", "games") 
+			*/
+			trackPromo: function( $promoTitle, $locationStr, $section ) {
+				var eventNum;
+				var eVarNum;
+				
+				if( $section ) {
+					switch($section){
+						case "home":
+							eventNum = 34;
+							eVarNum = 13;
+							break;
+						case "3ds":
+							eventNum = 40;
+							eVarNum = 31;
+							break;
+						case "wiiu":
+							eventNum = 48;
+							eVarNum = 35;
+							break;
+						case "games":
+							eventNum = 30;
+							eVarNum = 16;
+							break;
+						case "eshop":
+							eventNum = 56;
+							eVarNum = 36;
+							break;	
+					}
+				} else {
+					throw new Error("NIN.omniture.helper.trackPromo() requires $section");
+				}
+					
+				if(!$locationStr){
+					$locationStr = "No_Location_Provided";
+					throw new Error("NIN.omniture.helper.trackPromo() requires $locationStr");
+				}
+				
+				var addProp = [["prop26", $locationStr]];
+				_trackLink(eVarNum, $promoTitle, eventNum, $promoTitle, addProp);
+				
+				return this;
+			}
+			
+		};
+		
+		
+		/*
+			Public API
+		*/
+		return {
+			props: _props,
+			events: _events,
+			config: _config,
+			setLocale: _setlocale,
+			trackPage: _trackPage,
+			trackLink: _trackLink,
+			trackExitLink: _trackExitLink,
+			trackProp: _trackProp,
+			helper: _helper
+		};
+	};
+})( NIN );
+
+
+
+}
+/*
+     FILE ARCHIVED ON 05:11:24 Feb 21, 2015 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:37:05 May 10, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 216.636
+  exclusion.robots: 0.078
+  exclusion.robots.policy: 0.071
+  cdx.remote: 0.052
+  esindex: 0.01
+  LoadShardBlock: 170.675 (3)
+  PetaboxLoader3.datanode: 817.235 (4)
+  CDXLines.iter: 17.501 (3)
+  load_resource: 756.783
+  PetaboxLoader3.resolve: 31.15
+*/
