@@ -4,14 +4,14 @@ import "https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-vie
 import "https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/plugins/compass.js";
 
 new PhotoSphereViewer.Viewer({
-  panorama: '/360/img/panorama/AmongUs.jpg',
+  panorama: 'https://funneproject.github.io/360/img/panorama/AmongUs.jpg',
   container: 'photosphere',
   caption: 'Among Us',
   loadingImg: '/360/img/photosphere-logo.gif',
   loadingTxt: 'Loading!',
-  defaultLat: 0,
-  defaultLong: 1,
-  autorotateLat: 0,
+  defaultLat: -0.3,
+  defaultLong: 100.1,
+  autorotateLat: -0.3,
   lang: {
     autorotate: 'Automatic rotation',
     zoom      : 'Zoom',
@@ -28,10 +28,7 @@ new PhotoSphereViewer.Viewer({
   plugins: [
     [PhotoSphereViewer.CompassPlugin, {
       hotspots: [
-        { longitude: '0deg' },
-        { longitude: '90deg' },
-        { longitude: '180deg' },
-        { longitude: '270deg' },
+        { longitude: '330deg' },
       ],
     }],
   ],
