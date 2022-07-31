@@ -12,6 +12,7 @@ new PhotoSphereViewer.Viewer({
   defaultLat: -0.3,
   defaultLong: 100.1,
   autorotateLat: -0.3,
+  defaultZoomLvl: 50,
   lang: {
     autorotate: 'Automatic rotation',
     zoom      : 'Zoom',
