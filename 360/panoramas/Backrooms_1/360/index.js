@@ -9,10 +9,10 @@ new PhotoSphereViewer.Viewer({
   caption: 'The Backrooms!',
   loadingImg: '/360/img/photosphere-logo.gif',
   loadingTxt: 'Loading!',
-  defaultLat: -0.3,
-  defaultLong: 100.1,
-  autorotateLat: -0.3,
-  defaultZoomLvl: 50,
+  defaultLat: -0.5,
+  defaultLong: 100,
+  autorotateLat: -1,
+  defaultZoomLvl: 0,
   lang: {
     autorotate: 'Automatic rotation',
     zoom      : 'Zoom',
@@ -34,4 +34,3 @@ new PhotoSphereViewer.Viewer({
     }],
   ],
 });
-
