@@ -4,7 +4,7 @@ import "https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-vie
 import "https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/plugins/compass.js";
 
 new PhotoSphereViewer.Viewer({
-  panorama: 'https://funneproject.github.io/360/img/panorama/AmongUs.jpg',
+  panorama: '/360/img/panorama/AmongUs.jpg',
   container: 'photosphere',
   caption: 'Among Us',
   loadingImg: '/360/img/photosphere-logo.gif',
