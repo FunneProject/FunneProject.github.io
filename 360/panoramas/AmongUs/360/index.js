@@ -1,3 +1,8 @@
+import "https://cdn.jsdelivr.net/npm/uevent@2/browser.js";
+import "https://cdn.jsdelivr.net/npm/three/build/three.min.js";
+import "https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/photo-sphere-viewer.js";
+import "https://cdn.jsdelivr.net/npm/photo-sphere-viewer@4/dist/plugins/compass.js";
+
 new PhotoSphereViewer.Viewer({
   panorama: '/360/img/panorama/AmongUs.jpg',
   container: 'photosphere',
