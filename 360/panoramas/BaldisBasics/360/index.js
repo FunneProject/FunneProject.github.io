@@ -29,7 +29,7 @@ new PhotoSphereViewer.Viewer({
   plugins: [
     [PhotoSphereViewer.CompassPlugin, {
       hotspots: [
-        { longitude: '318deg' },
+        { longitude: '356deg' },
       ],
     }],
   ],
