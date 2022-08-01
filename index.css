@@ -14,7 +14,7 @@
   text-align: center;
   border-radius: 15px 15px 0px 0px; /*top-left, top-right, bottom-left, bottom-left*/
   max-width: 1300px;
-  min-height: 500px;
+  min-height: 800px;
   background-color: #111233;
   overflow: hidden;
 }
