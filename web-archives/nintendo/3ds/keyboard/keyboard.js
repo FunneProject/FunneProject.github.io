@@ -6,7 +6,7 @@ let isCapsOn = false;
 let isShiftOn = false;
   
   const backspace = document.querySelector(".keyboard-key-backspace");
-  backspace.addEventListener("click", () => {
+  backspace.addEventListener("click", ()=>{
     input.value = input.value.substring(0, input.value.length - 1);
   });
   
