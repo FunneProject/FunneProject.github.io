@@ -1,6 +1,6 @@
-	function randomFunne(){
-		var funnes = 
-		["help me",
+function randomFunne(){
+var funnes = 
+    ["help me",
      "i got bored",
      "bro",
      "bruh",
@@ -55,10 +55,11 @@
      "Funne Co.",
      "Funne",
      "Uhhhhhhh",
-		];
-		var index = Math.floor(Math.random()*funnes.length);
-		$("#random-funne").text(funnes[index]);
-	}
-    $(document).ready(function() {
-		randomFunne();
-    });
+    ];
+var index = Math.floor(Math.random()*funnes.length);
+$("#random-funne").text(funnes[index]);
+}
+
+$(document).ready(function() {
+	randomFunne();
+});
