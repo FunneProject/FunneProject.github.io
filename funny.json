@@ -1,0 +1,17 @@
+{
+  "META": {
+    "repoName": "FunneCo Repo",
+    "repoIcon": "https://usescarlet.com/favicon.png"
+  },
+  "Games": [
+    {
+      "name": "Charlie the Steak",
+      "version": "1.2",
+      "down": "https://archive.org/download/charlie-the-steak-hd-1.2/Charlie%2C%20The%20Steak%20HD%201.2.ipa",
+      "category": "Hacked Games",
+      "description": "Charlie the Steak.",
+      "bundleID": "com.dynamicdust.charlie",
+      "appstore": "com.dynamicdust.charlie"
+    }
+  ]
+}
