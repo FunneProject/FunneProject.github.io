@@ -1,0 +1,70 @@
+{
+  "name": "Epic Games, Inc.",
+  "iconURL": "https://content-download-egs.distro.on.epicgames.com/.well-known/EG-Shield-2023-Black-dual-tone-expanded.png",
+  "website": "https://epicgames.com",
+  "identifier": "com.epicgames.altstore",
+  "tintColor": "#818181",
+  "featuredApps": [
+    "com.epicgames.FortniteGame",
+    "uk.co.mediatonic.fallguys",
+    "com.psyonixllc.mesa"
+  ],
+  "apps": [
+    {
+      "name": "Fortnite",
+      "bundleIdentifier": "com.epicgames.FortniteGame",
+      "developerName": "Epic Games Sweden AB",
+      "subtitle": "",
+      "localizedDescription": "The future of Fortnite is here. Be the last player standing in Battle Royale and Zero Build, explore and survive in LEGO Fortnite, blast to the finish with Rocket Racing or headline a concert with Fortnite Festival. Play thousands of free creator made islands with friends including deathruns, tycoons, racing, zombie survival and more! Join the creator community and build your own island with Unreal Editor for Fortnite (UEFN) or Fortnite Creative tools. Each Fortnite island has an individual age rating so you can find the one that's right for you and your friends. Find it all in Fortnite! Fortnite requires an internet connection and supports iPhone 11 or later with at least 4GB of RAM.",
+      "iconURL": "https://cdn1.epicgames.com/item/fn/FN_Logo_512x512_1024x1024-0a19a924e7f61249ab0c76569abfdc31",
+      "tintColor": "#818181",
+      "category": "games",
+      "screenshots": [
+        {
+          "imageURL": "https://cdn1.epicgames.com/item/fn/FNBR_CH5S4_Logo_2688x1440_2688x1440-5ddfe90e9330b9c6406d8413f0f74623",
+          "width": 2688,
+          "height": 1440
+        }
+      ],
+      "beta": false,
+      "versions": [
+        {
+          "version": "31.00.1",
+          "date": "2024-08-16T00:00:00.0000000Z",
+          "localizedDescription": "",
+          "downloadURL": "https://content-download-egs.distro.on.epicgames.com/iOS/Org/o-aa83a0a9bc45e98c80c1b1c9d92e9e/prod-fn/Fortnite/361fa24b-28f5-49a0-a541-096ed9f5ebd3/variant/14ce6bd8-bad6-4149-9319-1b3b2cdf74bb.ipa",
+          "size": 474179584,
+          "minOSVersion": "17.4",
+          "buildVersion": "5522557.0.4"
+        }
+      ]
+    },
+    {
+      "name": "Fall Guys",
+      "bundleIdentifier": "uk.co.mediatonic.fallguys",
+      "developerName": "Mediatonic, Ltd.",
+      "subtitle": "",
+      "category": "games",
+      "localizedDescription": "Jump into a massive-multiplayer party royale with Fall Guys and be the last Bean standing that takes the Crown. Enter the Blunderdome for a free for all platformer game that invites chaos and high-concentrated fun. Competitive & Cooperative: Tumble between competitive free-for-alls and cooperative challenges—or take on the Blunderdome with up to 3 friends! Play with Friends: Fall Guys supports cross-play, cross-platform parties and cross-progression via your Epic Games Account. Ever-Evolving Content: Play stays fresh with new collabs and game updates which bring new Costumes, Obstacles, and ways to play. Gloriously Customizable: Choose from a multitude of Colors, Patterns, Costumes and Nameplates. Relish wins with extravagant Celebrations and share your flair with Emotes!",
+      "iconURL": "https://cdn1.epicgames.com/item/50118b7f954e450f8823df1614b24e80/iOS-New-512x512_512x512-ff4ce9348fe2142316cb4434228d78eb",
+      "tintColor": "#818181",
+      "screenshots": [
+        {
+          "imageURL": "https://cdn1.epicgames.com/item/50118b7f954e450f8823df1614b24e80/Screenshot11_2556x1179-006efb2712f584d8a018a29d3f16f360",
+          "width": 2556,
+          "height": 1179
+        }
+      ],
+      "beta": false,
+      "versions": [
+        {
+          "version": "11.1.4",
+          "date": "2024-08-16T00:00:00.0000000Z",
+          "localizedDescription": "",
+          "downloadURL": "https://content-download-egs.distro.on.epicgames.com/iOS/Org/o-4m3t3rbr8yw4rpfdlb6yjppdf6ztbf/d42d7101bb7a41c09a810ee418b7d3d0/4c1e51b2a65b409198e8203171aa98fd/91553473-0bc2-4133-86df-37420143dab3/",
+          "size": 2134734848,
+          "minOSVersion": "17.4",
+          "buildVersion": "4218"
+        }
+      ]
+    }
