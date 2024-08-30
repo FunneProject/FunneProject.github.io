@@ -5,13 +5,13 @@
   },
   "Games": [
     {
-      "name": "Charlie the Steak",
+      "name": "Nulls Clash",
       "version": "1.2",
-      "down": "https://archive.org/download/charlie-the-steak-hd-1.2/Charlie%2C%20The%20Steak%20HD%201.2.ipa",
+      "down": "https://tempweb.plod.io/ipa/clash16.386.9_9d56376e.ipa",
       "category": "Hacked Games",
-      "description": "Charlie the Steak.",
-      "bundleID": "com.dynamicdust.charlie",
-      "appstore": "com.dynamicdust.charlie"
+      "description": "Null's Clash",
+      "bundleID": "com.nulls.clash",
+      "appstore": "com.nulls.clash"
     }
   ]
 }
