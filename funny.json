@@ -1,8 +1,8 @@
 {
-  "META": {
-    "repoName": "FunneCo Repo",
-    "repoIcon": "https://usescarlet.com/favicon.png"
-  },
+  "name": "Funne Co.",
+  "iconURL": "https://content-download-egs.distro.on.epicgames.com/.well-known/EG-Shield-2023-Black-dual-tone-expanded.png",
+  "identifier": "com.funneco.repo",
+  "tintColor": "#818181",
   "Games": [
     {
       "name": "Nulls Clash",
