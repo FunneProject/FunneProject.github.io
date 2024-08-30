@@ -3,15 +3,14 @@
   "iconURL": "https://content-download-egs.distro.on.epicgames.com/.well-known/EG-Shield-2023-Black-dual-tone-expanded.png",
   "identifier": "com.funneco.repo",
   "tintColor": "#818181",
-  "Games": [
+  "apps": [
     {
       "name": "Nulls Clash",
+      "id": "nullsclash",
       "version": "1.2",
-      "down": "https://tempweb.plod.io/ipa/clash16.386.9_9d56376e.ipa",
-      "category": "Hacked Games",
+      "downloadURL": "https://tempweb.plod.io/ipa/clash16.386.9_9d56376e.ipa",
       "description": "Null's Clash",
-      "bundleID": "com.nulls.clash",
-      "appstore": "com.nulls.clash"
+      "bundleID": "com.nulls.clash"
     }
   ]
 }
