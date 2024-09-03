@@ -11,14 +11,6 @@
       "downloadURL": "https://tempweb.plod.io/ipa/clash16.386.9_9d56376e.ipa",
       "description": "Null's Clash",
       "bundleID": "com.nulls.clash"
-    },
-    {
-      "name": "Minecraft PE Decomp",
-      "id": "MCPE",
-      "version": "1.2",
-      "downloadURL": "https://funneproject.github.io/minecraftpe.ipa",
-      "description": "iOS Build of the Minecraft PE Decompilation Project",
-      "bundleID": "com.minecraft.depe"
     }
   ]
 }
